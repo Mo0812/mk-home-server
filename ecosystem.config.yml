@@ -1,0 +1,5 @@
+apps:
+  - script   : ./src/app.js
+    name     : 'tradfri-api'
+    instances: 1
+    watch: true
