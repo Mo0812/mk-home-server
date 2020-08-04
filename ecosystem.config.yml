@@ -1,5 +1,5 @@
 apps:
   - script   : ./src/app.js
-    name     : 'tradfri-api'
+    name     : 'mk-home-server'
     instances: 1
     watch: true
