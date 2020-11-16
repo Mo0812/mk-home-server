@@ -1,0 +1,21 @@
+version: "3"
+services:
+    db:
+        image: mariadb:10.5
+        container_name: mk_home_mariadb
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: dev
+            MYSQL_USER: dev
+            MYSQL_PASSWORD: dev
+            TZ: Europe/Paris
+        networks:
+            - mk_home_backend
+        volumes:
+            - ./conf/mysql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+        # - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
+        # - ./conf/mysql/general.log:/var/log/mysql/general.log
+        ports:
+            - 33306:3306
+networks:
+    mk_home_backend:

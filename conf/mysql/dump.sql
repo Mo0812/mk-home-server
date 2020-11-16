@@ -1,0 +1,75 @@
+# ************************************************************
+# Sequel Pro SQL dump
+# Version 5446
+#
+# https://www.sequelpro.com/
+# https://github.com/sequelpro/sequelpro
+#
+# Host: 127.0.0.1 (MySQL 5.5.5-10.5.8-MariaDB-1:10.5.8+maria~focal)
+# Database: dev
+# Generation Time: 2020-11-16 20:47:02 +0000
+# ************************************************************
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+SET NAMES utf8mb4;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+# Dump of table device_protocol
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `device_protocol`;
+
+CREATE TABLE `device_protocol` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `instanceID` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `lastSeen` int(11) DEFAULT NULL,
+  `onOff` int(11) DEFAULT NULL,
+  `color` text DEFAULT NULL,
+  `dimmer` int(11) DEFAULT NULL,
+  `protocolTime` timestamp NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+LOCK TABLES `device_protocol` WRITE;
+/*!40000 ALTER TABLE `device_protocol` DISABLE KEYS */;
+
+INSERT INTO `device_protocol` (`id`, `instanceID`, `type`, `lastSeen`, `onOff`, `color`, `dimmer`, `protocolTime`)
+VALUES
+	(1,65537,2,1605521601,1,'1',100,'2020-11-16 21:45:01'),
+	(2,65538,2,1605522822,1,'1',100,'2020-11-16 21:45:01'),
+	(3,65540,2,1605554739,1,'1',100,'2020-11-16 21:45:01'),
+	(4,65542,2,1605518701,0,'1',100,'2020-11-16 21:45:01'),
+	(5,65545,2,1605485474,0,'1',100,'2020-11-16 21:45:01'),
+	(6,65546,2,1605541633,0,'1',50,'2020-11-16 21:45:01'),
+	(7,65547,2,1605541641,0,'1',50,'2020-11-16 21:45:01'),
+	(8,65548,2,1605552269,1,'1',100,'2020-11-16 21:45:01'),
+	(9,65549,2,1605521579,1,'1',100,'2020-11-16 21:45:01'),
+	(10,65551,2,1605521598,0,'1',100,'2020-11-16 21:45:01'),
+	(11,65552,2,1605550763,1,'1',100,'2020-11-16 21:45:01'),
+	(12,65553,2,1605521582,1,'1',100,'2020-11-16 21:45:01'),
+	(13,65554,2,1603707195,1,'1',100,'2020-11-16 21:45:01'),
+	(14,65548,2,1605552269,0,'1',100,'2020-11-16 21:45:30'),
+	(15,65542,2,1605518701,1,'1',100,'2020-11-16 21:45:34'),
+	(16,65548,2,1605552269,1,'1',100,'2020-11-16 21:45:47'),
+	(17,65542,2,1605518701,0,'1',100,'2020-11-16 21:45:54'),
+	(18,65542,2,1605518701,1,'1',100,'2020-11-16 21:46:05');
+
+/*!40000 ALTER TABLE `device_protocol` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
