@@ -2,7 +2,7 @@ const events = require("events");
 const tradfriLib = require("node-tradfri-client");
 const TradfriClient = tradfriLib.TradfriClient;
 const AccessoryTypes = tradfriLib.AccessoryTypes;
-const tradfri = new TradfriClient(process.env.TRADFRI_URL);
+const discoverGateway = tradfriLib.discoverGateway;
 
 const lightbulbs = {};
 const plugs = {};
@@ -12,10 +12,13 @@ const groups = {};
 var tradfriEmitter = new events.EventEmitter();
 
 const connect = async () => {
+    const gateway = await discoverGateway();
+    const tradfri = new TradfriClient(gateway.name);
+
     try {
         await tradfri.connect(
             process.env.TRADFRI_USER,
-            process.env.TRADFRI_PASSWORD
+            process.env.TRADFRI_PSK
         );
 
         tradfri.on("device updated", tradfri_deviceUpdated).observeDevices();
