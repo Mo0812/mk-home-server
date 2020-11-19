@@ -1,7 +1,16 @@
-require("dotenv").config();
+const path = require("path");
+
+if (process.env.NODE_ENV == "production") {
+    require("dotenv").config({
+        path: path.resolve(__dirname, "../.env." + process.env.NODE_ENV),
+    });
+} else {
+    require("dotenv").config();
+}
+console.log(process.env.NODE_ENV, process.env.MARIADB_DB);
+
 const express = require("express");
 const cors = require("cors");
-const fs = require("fs");
 const bodyParser = require("body-parser");
 const { connect: connectTradfri } = require("./controller/Tradfri/Tradfri");
 const {

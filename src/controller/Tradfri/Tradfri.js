@@ -10,6 +10,8 @@ const discoverGateway = tradfriLib.discoverGateway;
 var tradfri_user = process.env.TRADFRI_USER;
 var tradfri_psk = process.env.TRADFRI_PSK;
 
+console.log("tradfri user:", process.env.TRADFRI_USER);
+
 const lightbulbs = {};
 const plugs = {};
 const devices = {};
