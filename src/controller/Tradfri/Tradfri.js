@@ -1,7 +1,6 @@
 const events = require("events");
 const tradfriLib = require("node-tradfri-client");
-const PersistentStorage = require("./PersistentStorage");
-const PresistentStorage = require("./PersistentStorage");
+// const PresistentStorage = require("./PersistentStorage");
 
 const TradfriClient = tradfriLib.TradfriClient;
 const AccessoryTypes = tradfriLib.AccessoryTypes;
@@ -37,7 +36,7 @@ const connect = async () => {
 function tradfri_deviceUpdated(device) {
     devices[device.instanceId] = device;
     console.log(device);
-    PersistentStorage.storeState(device);
+    // PersistentStorage.storeState(device);
     if (device.type === AccessoryTypes.lightbulb) {
         lightbulbs[device.instanceId] = device;
     } else if (device.type === AccessoryTypes.plug) {
