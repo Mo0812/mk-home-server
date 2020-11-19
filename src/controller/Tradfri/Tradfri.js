@@ -1,3 +1,4 @@
+const readline = require("readline");
 const events = require("events");
 const tradfriLib = require("node-tradfri-client");
 // const PresistentStorage = require("./PersistentStorage");
@@ -5,6 +6,9 @@ const tradfriLib = require("node-tradfri-client");
 const TradfriClient = tradfriLib.TradfriClient;
 const AccessoryTypes = tradfriLib.AccessoryTypes;
 const discoverGateway = tradfriLib.discoverGateway;
+
+var tradfri_user = process.env.TRADFRI_USER;
+var tradfri_psk = process.env.TRADFRI_PSK;
 
 const lightbulbs = {};
 const plugs = {};
@@ -18,24 +22,40 @@ const connect = async () => {
     const tradfri = new TradfriClient(gateway.name);
 
     try {
-        await tradfri.connect(
-            process.env.TRADFRI_USER,
-            process.env.TRADFRI_PSK
-        );
+        await tradfri.connect(tradfri_user, tradfri_psk);
 
         tradfri.on("device updated", tradfri_deviceUpdated).observeDevices();
 
         tradfri
             .on("group updated", tradfri_groupUpdated)
             .observeGroupsAndScenes();
-    } catch (e) {
-        console.log(e);
+    } catch (initialError) {
+        try {
+            const prompt = readline.createInterface({
+                input: process.stdin,
+                output: process.stdout,
+            });
+            prompt.question(
+                "Your Tradfri Security Code:",
+                async (securityCode) => {
+                    const { identity, psk } = await tradfri.authenticate(
+                        securityCode
+                    );
+                    tradfri_user = identity;
+                    tradfri_psk = psk;
+                    connect();
+                }
+            );
+        } catch (authError) {
+            console.error(initialError);
+            console.error(authError);
+        }
     }
 };
 
 function tradfri_deviceUpdated(device) {
     devices[device.instanceId] = device;
-    console.log(device);
+    // console.log(device);
     // PersistentStorage.storeState(device);
     if (device.type === AccessoryTypes.lightbulb) {
         lightbulbs[device.instanceId] = device;
