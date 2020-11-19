@@ -1,5 +1,6 @@
 apps:
-  - script   : ./src/app.js
-    name     : 'mk-home-server'
-    instances: 1
-    watch: true
+    - script: ./src/app.js
+      name: "mk-home-server"
+      instances: 1
+      watch: true
+      env: { "NODE_ENV": "production" }
