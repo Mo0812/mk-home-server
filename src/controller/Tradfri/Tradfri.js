@@ -1,7 +1,6 @@
 const readline = require("readline");
 const events = require("events");
 const tradfriLib = require("node-tradfri-client");
-const PresistentStorage = require("./PersistentStorage");
 
 const TradfriClient = tradfriLib.TradfriClient;
 const AccessoryTypes = tradfriLib.AccessoryTypes;
@@ -9,8 +8,6 @@ const discoverGateway = tradfriLib.discoverGateway;
 
 var tradfri_user = process.env.TRADFRI_USER;
 var tradfri_psk = process.env.TRADFRI_PSK;
-
-console.log("tradfri user:", process.env.TRADFRI_USER);
 
 const lightbulbs = {};
 const plugs = {};
@@ -57,14 +54,13 @@ const connect = async () => {
 
 function tradfri_deviceUpdated(device) {
     devices[device.instanceId] = device;
-    PresistentStorage.storeState(device);
     if (device.type === AccessoryTypes.lightbulb) {
         lightbulbs[device.instanceId] = device;
     } else if (device.type === AccessoryTypes.plug) {
         plugs[device.instanceId] = device;
     }
 
-    tradfriEmitter.emit("tradfri-device-update");
+    tradfriEmitter.emit("tradfri-device-update", device);
 }
 
 function tradfri_groupUpdated(group) {
