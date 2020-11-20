@@ -15,14 +15,9 @@ dbHandler.connect(function (err) {
 
 function storeState(device) {
     if (device.lightList && device.lightList[0]) {
+        console.log(device.lightList[0].color);
         dbHandler.query(
-            `INSERT INTO device_protocol (instanceID, type, lastSeen, onOff, color, dimmer) VALUES (${
-                device.instanceId
-            }, ${device.type}, ${device.lastSeen}, ${
-                device.lightList[0].onOff
-            }, ${device.lightList[0].color ? 1 : 0}, ${
-                device.lightList[0].dimmer
-            });`
+            `INSERT INTO device_protocol (instanceID, type, lastSeen, onOff, color, dimmer) VALUES (${device.instanceId}, ${device.type}, ${device.lastSeen}, ${device.lightList[0].onOff}, "${device.lightList[0].color}", ${device.lightList[0].dimmer});`
         );
     }
 }
