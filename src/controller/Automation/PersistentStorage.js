@@ -28,6 +28,11 @@ function storeDeviceState(device) {
     }
 }
 
+/**
+ *
+ * @param {array} data
+ * @param {array} fields
+ */
 function parseCSV(data, fields) {
     fields = fields.map((item) => item.name);
     const parser = new Parser({ fields });
