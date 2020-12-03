@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const { Parser } = require("json2csv");
+const logger = require("../Logger/Logger");
 
 const connectionCredentials = {
     host: process.env.MARIADB_HOST,
@@ -14,7 +15,7 @@ function storeDeviceState(device) {
         var dbHandler = mysql.createConnection(connectionCredentials);
         dbHandler.connect(function (err) {
             if (err) {
-                console.error("MySQL Connection failed", err);
+                logger.log("error", "MySQL Connection failed: " + err.message);
             }
         });
         dbHandler.query(
@@ -22,7 +23,10 @@ function storeDeviceState(device) {
         );
         dbHandler.end((err) => {
             if (err) {
-                console.error("MySQL Connection could not be closed", err);
+                logger.log(
+                    "error",
+                    "MySQL Connection could not be closed: " + err.message
+                );
             }
         });
     }
@@ -44,7 +48,7 @@ const exportDeviceState = () => {
     var dbHandler = mysql.createConnection(connectionCredentials);
     dbHandler.connect(function (err) {
         if (err) {
-            console.error("MySQL Connection failed", err);
+            logger.log("error", "MySQL Connection failed: " + err.message);
         }
     });
     const promise = new Promise((resolve, reject) => {
@@ -52,7 +56,10 @@ const exportDeviceState = () => {
             `SELECT * FROM device_protocol ORDER BY protocolTime;`,
             (err, result, fields) => {
                 if (err) {
-                    console.error("MySQL Select Statement failed");
+                    logger.log(
+                        "error",
+                        "MySQL Select Statement failed: " + err.message
+                    );
                     reject(err);
                 }
                 try {
@@ -70,7 +77,10 @@ const exportDeviceState = () => {
     });
     dbHandler.end((err) => {
         if (err) {
-            console.error("MySQL Connection could not be closed", err);
+            logger.log(
+                "error",
+                "MySQL Connection could not be closed: " + err.message
+            );
         }
     });
     return promise;
