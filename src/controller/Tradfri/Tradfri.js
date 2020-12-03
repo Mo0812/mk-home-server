@@ -97,7 +97,7 @@ function _loadCredentials() {
         path: path.resolve(__dirname, "../../../.tradfri-credentials"),
     });
     if (credentials.error) {
-        logger.log("error", error.message);
+        logger.log("error", credentials.error.message);
     }
     credentials = credentials.parsed;
     return {
