@@ -1,5 +1,4 @@
 const path = require("path");
-const logger = require("./controller/Logger/Logger");
 
 try {
     if (process.env.NODE_ENV == "production") {
@@ -16,7 +15,7 @@ try {
         }
     }
 } catch (e) {
-    logger.log("error", "ENV file not found");
+    console.log("error", "ENV file not found");
     throw e;
 }
 

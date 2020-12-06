@@ -8,6 +8,8 @@ RUN yarn install
 
 COPY . .
 
+COPY [".env.docker", ".env.production"]
+
 EXPOSE 8000 5353 5684 51379
 
 CMD ["yarn", "run", "prod"]

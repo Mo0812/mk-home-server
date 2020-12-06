@@ -1,8 +1,9 @@
 node_modules
-conf
+**/conf
 .git
-.dockerignore
+.env
 .env.sample
+.env.production
 .gitignore
 .prettierrc
 docker-compose.yml

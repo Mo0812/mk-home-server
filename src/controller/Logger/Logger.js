@@ -5,7 +5,7 @@ const logger = winston.createLogger({
     format: winston.format.json(),
 });
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production" || process.env.LOG_CONSOLE) {
     logger.add(
         new winston.transports.Console({
             format: winston.format.simple(),
