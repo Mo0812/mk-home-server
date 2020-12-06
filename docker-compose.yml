@@ -1,8 +1,20 @@
 version: "3"
 services:
+    mk-home-server:
+      build: ./
+      container_name: mk-home-server
+      networks:
+          - mk_home_backend
+      volumes:
+          - ./:/usr/src/app
+      ports:
+          - 8000:8000
+          - 5353:5353
+          - 5684:5684
+          - 51379:51379
     db:
         image: mariadb:10.5
-        container_name: mk_home_mariadb
+        container_name: mk-home-mariadb
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: dev
