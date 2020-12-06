@@ -6,7 +6,12 @@ This project is still in an early development state and for now is somehow speci
 
 ## Run the project
 
-The **mk-home-server** REST API is designed to run by the [_pm2_](https://github.com/Unitech/pm2) process manager. The according settings for this can be found in the `ecosystem.config.yml`.
+### Production
+
+The **mk-home-server** REST API is designed to either run by the [_pm2_](https://github.com/Unitech/pm2) process manager or in a **docker** container for production purposes.
+
+#### PM2
+The according settings for this can be found in the `ecosystem.config.yml`.
 
 To start it with *pm2* you can use:
 
@@ -20,10 +25,23 @@ To save this setting over the next system startup and make it run permanently us
 pm2 save
 ```
 
-If you just want to test the current implementation you can also run:
+#### Docker
+
+To start the API and the according MariaDB database you can easily do:
+```
+docker-compose up -d --build
+```
+
+### Development
+
+If you just want to develop or test the current implementation you can also run the following commands to run the API in your systems node environment and with **hot reloading** maintained by `nodemon`:
 
 ```
-npm run dev
+yarn install
+yarn dev
+
+# If you also want to use the database you can run the instance inside of docker with:
+docker-compose up -d --build db # optional
 ```
 
 ## UI to use the provided data
