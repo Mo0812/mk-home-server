@@ -1,14 +1,18 @@
 const PresistentStorage = require("../Automation/PersistentStorage");
 const { emitter: tradfriEmitter } = require("../Tradfri/Tradfri");
+const logger = require("../Logger/Logger");
 
 const collectData = () => {
-    tradfriEmitter.on("tradfri-device-update", (device) => {
+    tradfriEmitter.on("tradfri-device-update", async (device) => {
         try {
             if (process.env.NODE_ENV == "production") {
-                PresistentStorage.storeDeviceState(device);
+                await PresistentStorage.storeDeviceState(device);
             }
         } catch (err) {
-            console.log("Tradfri data collection failed", err);
+            logger.log(
+                "error",
+                "Tradfri data collection failed " + err.message
+            );
         }
     });
 };

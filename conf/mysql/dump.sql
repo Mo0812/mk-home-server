@@ -1,13 +1,13 @@
 # ************************************************************
-# Sequel Pro SQL dump
-# Version 5446
+# Sequel Ace SQL dump
+# Version 2121
 #
-# https://www.sequelpro.com/
-# https://github.com/sequelpro/sequelpro
+# https://sequel-ace.com/
+# https://github.com/Sequel-Ace/Sequel-Ace
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.5.8-MariaDB-1:10.5.8+maria~focal)
 # Database: dev
-# Generation Time: 2020-11-21 20:24:42 +0000
+# Generation Time: 2020-12-10 21:42:00 +0000
 # ************************************************************
 
 
@@ -445,6 +445,21 @@ VALUES
 
 /*!40000 ALTER TABLE `device_protocol` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# Dump of table people_protocol
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `people_protocol`;
+
+CREATE TABLE `people_protocol` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `userId` int(11) DEFAULT NULL,
+  `protocolTime` timestamp NULL DEFAULT current_timestamp(),
+  `type` enum('go','return') DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 
 

@@ -1,36 +1,27 @@
-const mysql = require("mysql");
+const db = require("../Database/Database");
 const { Parser } = require("json2csv");
 const logger = require("../Logger/Logger");
-const { use } = require("../../routes/Automation/Automation");
-
-const connectionCredentials = {
-    host: process.env.MARIADB_HOST,
-    user: process.env.MARIADB_USER,
-    password: process.env.MARIADB_PW,
-    database: process.env.MARIADB_DB,
-    port: process.env.MARIADB_PORT,
-};
 
 function storeDeviceState(device) {
-    if (device.lightList && device.lightList[0]) {
-        var dbHandler = mysql.createConnection(connectionCredentials);
-        dbHandler.connect(function (err) {
-            if (err) {
-                logger.log("error", "MySQL Connection failed: " + err.message);
-            }
-        });
-        dbHandler.query(
-            `INSERT INTO device_protocol (instanceID, type, lastSeen, onOff, color, dimmer) VALUES (${device.instanceId}, ${device.type}, ${device.lastSeen}, ${device.lightList[0].onOff}, "${device.lightList[0].color}", ${device.lightList[0].dimmer});`
-        );
-        dbHandler.end((err) => {
-            if (err) {
-                logger.log(
-                    "error",
-                    "MySQL Connection could not be closed: " + err.message
-                );
-            }
-        });
-    }
+    return new Promise((resolve, reject) => {
+        if (device.lightList && device.lightList[0]) {
+            db.query(
+                `INSERT INTO device_protocol (instanceID, type, lastSeen, onOff, color, dimmer) VALUES (${device.instanceId}, ${device.type}, ${device.lastSeen}, ${device.lightList[0].onOff}, "${device.lightList[0].color}", ${device.lightList[0].dimmer});`,
+                (err, res) => {
+                    if (err) {
+                        logger.log(
+                            "error",
+                            "MySQL statement failed: " + err.message
+                        );
+                        reject(err);
+                    }
+                    resolve(res);
+                }
+            );
+        } else {
+            reject(new Error("No device object provided"));
+        }
+    });
 }
 
 /**
@@ -46,14 +37,8 @@ function parseCSV(data, fields) {
 }
 
 const exportDeviceState = () => {
-    var dbHandler = mysql.createConnection(connectionCredentials);
-    dbHandler.connect(function (err) {
-        if (err) {
-            logger.log("error", "MySQL Connection failed: " + err.message);
-        }
-    });
     const promise = new Promise((resolve, reject) => {
-        dbHandler.query(
+        db.query(
             `SELECT * FROM device_protocol ORDER BY protocolTime;`,
             (err, result, fields) => {
                 if (err) {
@@ -76,54 +61,42 @@ const exportDeviceState = () => {
             }
         );
     });
-    dbHandler.end((err) => {
-        if (err) {
-            logger.log(
-                "error",
-                "MySQL Connection could not be closed: " + err.message
-            );
-        }
-    });
     return promise;
 };
 
 function storeGo(userId = null) {
-    var dbHandler = mysql.createConnection(connectionCredentials);
-    dbHandler.connect(function (err) {
-        if (err) {
-            logger.log("error", "MySQL Connection failed: " + err.message);
-        }
-    });
-    dbHandler.query(
-        `INSERT INTO people_protocol (userId, type) VALUES (${userId}, 'go');`
-    );
-    dbHandler.end((err) => {
-        if (err) {
-            logger.log(
-                "error",
-                "MySQL Connection could not be closed: " + err.message
-            );
-        }
+    return new Promise((resolve, reject) => {
+        db.query(
+            `INSERT INTO people_protocol (userId, type) VALUES (${userId}, 'go');`,
+            (err, res) => {
+                if (err) {
+                    logger.log(
+                        "error",
+                        "MySQL statement failed: " + err.message
+                    );
+                    reject(err);
+                }
+                resolve(res);
+            }
+        );
     });
 }
 
 function storeReturn(userId = null) {
-    var dbHandler = mysql.createConnection(connectionCredentials);
-    dbHandler.connect(function (err) {
-        if (err) {
-            logger.log("error", "MySQL Connection failed: " + err.message);
-        }
-    });
-    dbHandler.query(
-        `INSERT INTO people_protocol (userId, type) VALUES (${userId}, 'return');`
-    );
-    dbHandler.end((err) => {
-        if (err) {
-            logger.log(
-                "error",
-                "MySQL Connection could not be closed: " + err.message
-            );
-        }
+    return new Promise((resolve, reject) => {
+        db.query(
+            `INSERT INTO people_protocol (userId, type) VALUES (${userId}, 'return');`,
+            (err, res) => {
+                if (err) {
+                    logger.log(
+                        "error",
+                        "MySQL statement failed: " + err.message
+                    );
+                    reject(err);
+                }
+                resolve(res);
+            }
+        );
     });
 }
 

@@ -1,5 +1,6 @@
 const express = require("express");
 const PersistentStorage = require("../../controller/Automation/PersistentStorage");
+const ApiError = require("../../helpers/Errors/ApiError");
 
 const automationRouter = express.Router();
 
@@ -21,14 +22,22 @@ automationRouter.get("/export", async (req, res) => {
     res.send(await PersistentStorage.exportDeviceState());
 });
 
-automationRouter.get("/go", async (req, res) => {
-    res.header("Content-Type", "text/csv");
-    res.send(await PersistentStorage.storeGo());
+automationRouter.get("/go", async (req, res, next) => {
+    try {
+        const response = await PersistentStorage.storeGo();
+        res.send();
+    } catch (error) {
+        next(new ApiError(500, error));
+    }
 });
 
 automationRouter.get("/return", async (req, res) => {
-    res.header("Content-Type", "text/csv");
-    res.send(await PersistentStorage.storeReturn());
+    try {
+        const response = await PersistentStorage.storeReturn();
+        res.send();
+    } catch (error) {
+        next(new ApiError(500, error));
+    }
 });
 
 module.exports = automationRouter;
