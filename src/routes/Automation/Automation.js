@@ -21,4 +21,14 @@ automationRouter.get("/export", async (req, res) => {
     res.send(await PersistentStorage.exportDeviceState());
 });
 
+automationRouter.get("/go", async (req, res) => {
+    res.header("Content-Type", "text/csv");
+    res.send(await PersistentStorage.storeGo());
+});
+
+automationRouter.get("/return", async (req, res) => {
+    res.header("Content-Type", "text/csv");
+    res.send(await PersistentStorage.storeReturn());
+});
+
 module.exports = automationRouter;

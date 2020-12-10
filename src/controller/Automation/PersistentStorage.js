@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const { Parser } = require("json2csv");
 const logger = require("../Logger/Logger");
+const { use } = require("../../routes/Automation/Automation");
 
 const connectionCredentials = {
     host: process.env.MARIADB_HOST,
@@ -86,7 +87,49 @@ const exportDeviceState = () => {
     return promise;
 };
 
+function storeGo(userId = null) {
+    var dbHandler = mysql.createConnection(connectionCredentials);
+    dbHandler.connect(function (err) {
+        if (err) {
+            logger.log("error", "MySQL Connection failed: " + err.message);
+        }
+    });
+    dbHandler.query(
+        `INSERT INTO people_protocol (userId, type) VALUES (${userId}, 'go');`
+    );
+    dbHandler.end((err) => {
+        if (err) {
+            logger.log(
+                "error",
+                "MySQL Connection could not be closed: " + err.message
+            );
+        }
+    });
+}
+
+function storeReturn(userId = null) {
+    var dbHandler = mysql.createConnection(connectionCredentials);
+    dbHandler.connect(function (err) {
+        if (err) {
+            logger.log("error", "MySQL Connection failed: " + err.message);
+        }
+    });
+    dbHandler.query(
+        `INSERT INTO people_protocol (userId, type) VALUES (${userId}, 'return');`
+    );
+    dbHandler.end((err) => {
+        if (err) {
+            logger.log(
+                "error",
+                "MySQL Connection could not be closed: " + err.message
+            );
+        }
+    });
+}
+
 module.exports = {
     storeDeviceState: storeDeviceState,
     exportDeviceState: exportDeviceState,
+    storeGo: storeGo,
+    storeReturn: storeReturn,
 };
