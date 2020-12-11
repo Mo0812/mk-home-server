@@ -1,5 +1,5 @@
 const express = require("express");
-const PersistentStorage = require("../../controller/Automation/PersistentStorage");
+const PersistentStorage = require("../../controller/Automation/Automation");
 const ApiError = require("../../helpers/Errors/ApiError");
 
 const automationRouter = express.Router();

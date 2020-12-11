@@ -1,6 +1,6 @@
 var express = require("express");
 const WebSocket = require("ws");
-const { emitter: tradfriEmitter } = require("../Tradfri/Tradfri");
+const { emitter: tradfriEmitter } = require("../../controller/Tradfri/Tradfri");
 const wsApp = express();
 
 let wsServer;

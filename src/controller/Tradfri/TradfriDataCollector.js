@@ -1,6 +1,6 @@
-const PresistentStorage = require("../Automation/PersistentStorage");
+const PresistentStorage = require("../Automation/Automation");
 const { emitter: tradfriEmitter } = require("../Tradfri/Tradfri");
-const logger = require("../Logger/Logger");
+const logger = require("../../system/Logger/Logger");
 
 const collectData = () => {
     tradfriEmitter.on("tradfri-device-update", async (device) => {

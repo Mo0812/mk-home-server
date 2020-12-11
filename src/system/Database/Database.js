@@ -13,7 +13,6 @@ const connection = mysql.createConnection(connectionCredentials);
 connection.connect(function (err) {
     if (err) {
         logger.log("error", "MySQL connection failed: " + err.message);
-        throw err;
     }
 });
 

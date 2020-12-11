@@ -5,7 +5,7 @@ const {
 
 const {
     connect: connectWS,
-} = require("../controller/WebsocketServer/WebsocketServer");
+} = require("../system/WebsocketServer/WebsocketServer");
 
 connectTradfri();
 collectDataTradfri();

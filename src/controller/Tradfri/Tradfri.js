@@ -1,5 +1,5 @@
 const events = require("events");
-const logger = require("../Logger/Logger");
+const logger = require("../../system/Logger/Logger");
 const path = require("path");
 const fs = require("fs");
 const { stringify } = require("envfile");
@@ -23,9 +23,9 @@ const groups = {};
 var tradfriEmitter = new events.EventEmitter();
 
 const connect = async (withIP = false) => {
-//    const gateway = await discoverGateway();
-//    console.log(gateway);
-//    const gatewayHost = withIP ? gateway.addresses[0] : gateway.name;
+    //    const gateway = await discoverGateway();
+    //    console.log(gateway);
+    //    const gatewayHost = withIP ? gateway.addresses[0] : gateway.name;
 
     const tradfri = new TradfriClient("192.168.178.38", {
         customLogger: tradfri_logger,

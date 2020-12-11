@@ -1,6 +1,6 @@
-const db = require("../Database/Database");
+const db = require("../../system/Database/Database");
 const { Parser } = require("json2csv");
-const logger = require("../Logger/Logger");
+const logger = require("../../system/Logger/Logger");
 
 function storeDeviceState(device) {
     return new Promise((resolve, reject) => {
