@@ -8,9 +8,11 @@ const _loadLog = (type) => {
             logPath = loggerConfig.errorLogPath;
         }
         fs.readFile(logPath, "UTF-8", (err, data) => {
+            console.log(err);
             if (err) {
                 // TODO: Error handling
                 reject(err);
+                return;
             }
             const lines = data.split(/\r?\n/);
             const jsonLines = [];
@@ -21,6 +23,7 @@ const _loadLog = (type) => {
                 }
             }
             resolve(jsonLines);
+            return;
         });
     });
 };
