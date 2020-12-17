@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.5.8-MariaDB-1:10.5.8+maria~focal)
 # Database: dev
-# Generation Time: 2020-12-10 21:42:00 +0000
+# Generation Time: 2020-12-17 22:10:45 +0000
 # ************************************************************
 
 
@@ -19,6 +19,29 @@ SET NAMES utf8mb4;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+# Dump of table automation_settings
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `automation_settings`;
+
+CREATE TABLE `automation_settings` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `instanceID` int(11) NOT NULL,
+  `mode` enum('away','always','scheduled') NOT NULL DEFAULT 'away',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+LOCK TABLES `automation_settings` WRITE;
+/*!40000 ALTER TABLE `automation_settings` DISABLE KEYS */;
+
+INSERT INTO `automation_settings` (`id`, `instanceID`, `mode`)
+VALUES
+	(1,65540,'away');
+
+/*!40000 ALTER TABLE `automation_settings` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table device_protocol

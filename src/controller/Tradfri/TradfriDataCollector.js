@@ -1,4 +1,4 @@
-const PresistentStorage = require("../Automation/Automation");
+const Protocol = require("../Automation/Protocol");
 const { emitter: tradfriEmitter } = require("../Tradfri/Tradfri");
 const logger = require("../../system/Logger/Logger");
 
@@ -6,7 +6,7 @@ const collectData = () => {
     tradfriEmitter.on("tradfri-device-update", async (device) => {
         try {
             if (process.env.NODE_ENV == "production") {
-                await PresistentStorage.storeDeviceState(device);
+                await Protocol.storeDeviceState(device);
             }
         } catch (err) {
             logger.log(
