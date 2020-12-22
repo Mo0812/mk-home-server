@@ -23,17 +23,18 @@ const groups = {};
 var tradfriEmitter = new events.EventEmitter();
 
 const connect = async (withIP = false) => {
-    //    const gateway = await discoverGateway();
-    //    console.log(gateway);
-    //    const gatewayHost = withIP ? gateway.addresses[0] : gateway.name;
+    const gateway = await discoverGateway();
+    logger.log("info", gateway);
+    const gatewayHost = withIP ? gateway.addresses[0] : gateway.name;
 
-    const tradfri = new TradfriClient("192.168.178.38", {
+    const tradfri = new TradfriClient(gatewayHost, {
         customLogger: tradfri_logger,
         watchConnection: false,
     });
 
     try {
         await tradfri.connect(tradfri_user, tradfri_psk);
+        logger.log("info", "Tradfri: Connected with credentials");
 
         tradfri.on("device updated", tradfri_deviceUpdated).observeDevices();
 
@@ -41,19 +42,19 @@ const connect = async (withIP = false) => {
             .on("group updated", tradfri_groupUpdated)
             .observeGroupsAndScenes();
     } catch (initialError) {
-        logger.log("error", initialError.message);
+        logger.log("error", "Tradfri: " + initialError.message);
         if (
             initialError instanceof TradfriError &&
             TradfriErrorCodes.ConnectionTimedOut &&
             !withIP
         ) {
-            logger.log("error", "Try to reconnect with IP first");
+            logger.log("error", "Tradfri: Try to reconnect with IP first");
             connect(true);
         }
         try {
             logger.log(
                 "error",
-                `Need to reauthentificate with security code: ${tradfri_securityCode}`
+                `Tradfri: Need to reauthentificate with security code: ${tradfri_securityCode}`
             );
             const { identity, psk } = await tradfri.authenticate(
                 tradfri_securityCode
