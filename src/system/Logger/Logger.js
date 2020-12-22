@@ -10,14 +10,22 @@ const logger = winston.createLogger({
 });
 
 if (loggerConfig.logConsole) {
-    logger.add(
-        new winston.transports.Console({
-            format: winston.format.simple(),
-            level: "error",
-        })
-    );
+    if (process.env.NODE_ENV == "development") {
+        logger.add(
+            new winston.transports.Console({
+                format: winston.format.simple(),
+            })
+        );
+    } else {
+        logger.add(
+            new winston.transports.Console({
+                format: winston.format.simple(),
+                level: "error",
+            })
+        );
+    }
 }
-if (true || process.env.NODE_ENV == "production") {
+if (process.env.NODE_ENV == "production") {
     logger.add(
         new winston.transports.File({
             filename: loggerConfig.errorLogPath,
