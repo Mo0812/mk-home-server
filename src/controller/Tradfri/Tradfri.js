@@ -27,14 +27,12 @@ const connect = async (withIP = false) => {
     logger.log("info", gateway);
     const gatewayHost = withIP ? gateway.addresses[0] : gateway.name;
 
-    const tradfri = new TradfriClient(gatewayHost, {
-        customLogger: tradfri_logger,
-        watchConnection: false,
-    });
+    const tradfri = new TradfriClient(gatewayHost);
 
     try {
         await tradfri.connect(tradfri_user, tradfri_psk);
         logger.log("info", "Tradfri: Connected with credentials");
+        tradfriEmitter.emit("tradfri-gateway-connection-ok");
 
         tradfri.on("device updated", tradfri_deviceUpdated).observeDevices();
 
@@ -67,6 +65,7 @@ const connect = async (withIP = false) => {
             connect(true);
         } catch (authError) {
             logger.log("error", authError.message);
+            tradfriEmitter.emit("tradfri-gateway-connection-error");
         }
     }
 };

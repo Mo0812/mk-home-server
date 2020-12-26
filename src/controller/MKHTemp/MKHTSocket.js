@@ -9,22 +9,22 @@ const connect = () => {
     const connection = new WebSocket(url);
 
     connection.on("open", () => {
-        mkhtEmitter.emit("mkht_connect");
+        mkhtEmitter.emit("mkht-connection-ok");
         logger.log("info", "MKHTSocket: Connect to MKHT");
     });
 
     connection.on("error", (error) => {
         logger.log("error", "MKHTSocket Error: " + error);
-        mkhtEmitter.emit("mkht_error", error);
+        mkhtEmitter.emit("mkht-connection-error", error);
     });
 
     connection.on("message", async (e) => {
-        mkhtEmitter.emit("mkht_update", e.data);
+        mkhtEmitter.emit("mkht-update", e.data);
     });
 
     connection.on("close", () => {
         logger.log("error", "MKHTSocket Error: Connection closed");
-        mkhtEmitter.emit("mkht_error");
+        mkhtEmitter.emit("mkht-connection-error");
     });
 };
 

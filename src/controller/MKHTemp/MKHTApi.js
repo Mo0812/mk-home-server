@@ -26,7 +26,6 @@ const getAll = async (duration = 1, unit = "days") => {
             },
         });
         if (response.status == 200) {
-            console.log(untilTimestamp);
             return response.data;
         }
     } catch (e) {
