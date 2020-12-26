@@ -12,6 +12,7 @@ const smarthomeRouter = require("../routes/Smarthome/Smarthome");
 const automationRouter = require("../routes/Automation/Automation");
 const documentationRouter = require("../routes/Documentation/Documentation");
 const loggingRouter = require("../routes/Logging/Logging");
+const mkhtRouter = require("../routes/MKHTemp/MKHTemp");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -21,6 +22,7 @@ app.use("/system", systemRouter);
 app.use("/automation", automationRouter);
 app.use("/docs", documentationRouter);
 app.use("/logging", loggingRouter);
+app.use("/mkht", mkhtRouter);
 
 app.use((error, req, res, next) => {
     ErrorHandler.handleError(error, res);
