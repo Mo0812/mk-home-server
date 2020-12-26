@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.5.8-MariaDB-1:10.5.8+maria~focal)
 # Database: dev
-# Generation Time: 2020-12-17 22:10:45 +0000
+# Generation Time: 2020-12-26 20:04:22 +0000
 # ************************************************************
 
 
@@ -42,6 +42,21 @@ VALUES
 
 /*!40000 ALTER TABLE `automation_settings` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# Dump of table connected_smarthome_devices
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `connected_smarthome_devices`;
+
+CREATE TABLE `connected_smarthome_devices` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` enum('mkht') NOT NULL,
+  `ip_addr` text DEFAULT NULL,
+  `nicename` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 
 # Dump of table device_protocol
