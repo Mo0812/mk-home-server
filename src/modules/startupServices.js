@@ -27,7 +27,7 @@ tradfri.emitter.on("tradfri-gateway-connection-error", () => {
 });
 
 tradfri.emitter.on("tradfri-gateway-connection-ok", () => {
-    if (tradfriReconnectInterval == null) {
+    if (tradfriReconnectInterval != null) {
         logger.log(
             "info",
             "StartupService: Successful reconnect to Tradfri gateway"
@@ -49,7 +49,7 @@ mkhtSocket.emitter.on("mkht-connection-error", () => {
 });
 
 mkhtSocket.emitter.on("mkht-connection-ok", () => {
-    if (mkhtReconnectInterval == null) {
+    if (mkhtReconnectInterval != null) {
         logger.log(
             "info",
             "StartupService: Successful reconnect to MKHTSocket"

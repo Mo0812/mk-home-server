@@ -99,6 +99,7 @@ function _loadCredentials() {
     });
     if (credentials.error) {
         logger.log("error", credentials.error.message);
+        return;
     }
     credentials = credentials.parsed;
     return {
@@ -112,10 +113,14 @@ function _storeCredentials(identity, psk) {
         TRADFRI_USER: identity,
         TRADFRI_PSK: psk,
     };
-    fs.writeFileSync(
-        path.resolve(__dirname, "../../../.tradfri-credentials"),
-        stringify(newCredentials)
-    );
+    try {
+        fs.writeFileSync(
+            path.resolve(__dirname, "../../../.tradfri-credentials"),
+            stringify(newCredentials)
+        );
+    } catch (error) {
+        logger.log("error", error);
+    }
 }
 
 module.exports = {
