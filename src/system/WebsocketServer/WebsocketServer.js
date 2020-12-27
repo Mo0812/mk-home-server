@@ -1,6 +1,7 @@
 var express = require("express");
 const WebSocket = require("ws");
 const { emitter: tradfriEmitter } = require("../../controller/Tradfri/Tradfri");
+const { emitter: mkhtEmitter } = require("../../controller/MKHTemp/MKHTSocket");
 const wsApp = express();
 
 let wsServer;
@@ -18,6 +19,9 @@ const connect = () => {
         });
         tradfriEmitter.on("tradfri-group-update", () => {
             socket.send("tradfri-group-update");
+        });
+        mkhtEmitter.on("mkht-update", () => {
+            socket.send("mkht-update");
         });
     });
     return wsServer;

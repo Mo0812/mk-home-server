@@ -51,6 +51,7 @@ const getAll = async (deviceId, duration = 1, unit = "days") => {
 };
 
 module.exports = {
+    getDevice,
     getDevices,
     getCurrentData,
     getAll,
