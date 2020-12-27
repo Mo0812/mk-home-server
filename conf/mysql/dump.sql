@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.5.8-MariaDB-1:10.5.8+maria~focal)
 # Database: dev
-# Generation Time: 2020-12-26 20:04:22 +0000
+# Generation Time: 2020-12-27 15:39:25 +0000
 # ************************************************************
 
 
@@ -51,12 +51,22 @@ DROP TABLE IF EXISTS `connected_smarthome_devices`;
 
 CREATE TABLE `connected_smarthome_devices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `type` enum('mkht') NOT NULL,
+  `type` enum('mkht','tradfri') NOT NULL,
   `ip_addr` text DEFAULT NULL,
+  `port` int(11) DEFAULT NULL,
   `nicename` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+LOCK TABLES `connected_smarthome_devices` WRITE;
+/*!40000 ALTER TABLE `connected_smarthome_devices` DISABLE KEYS */;
+
+INSERT INTO `connected_smarthome_devices` (`id`, `type`, `ip_addr`, `port`, `nicename`)
+VALUES
+	(1,'mkht','192.168.178.22',8000,'Therometer Arbeitszimmer');
+
+/*!40000 ALTER TABLE `connected_smarthome_devices` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table device_protocol

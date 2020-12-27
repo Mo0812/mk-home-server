@@ -1,11 +1,10 @@
 const logger = require("../system/Logger/Logger");
 const tradfri = require("../controller/Tradfri/Tradfri");
 const tradfriDataCollector = require("../controller/Tradfri/TradfriDataCollector");
-
+const mkhtSocket = require("../controller/MKHTemp/MKHTSocket");
 const {
     connect: connectWS,
 } = require("../system/WebsocketServer/WebsocketServer");
-const mkhtSocket = require("../controller/MKHTemp/MKHTSocket");
 
 connectWS();
 tradfri.connect();
