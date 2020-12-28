@@ -1,6 +1,6 @@
 const express = require("express");
 const Protocol = require("../../controller/Automation/Protocol");
-const Settings = require("../../controller/Automation/Settings");
+const Rules = require("../../controller/Automation/Rules");
 const ApiError = require("../../helpers/Errors/ApiError");
 
 const automationRouter = express.Router();
@@ -41,18 +41,18 @@ automationRouter.get("/return", async (req, res) => {
     }
 });
 
-automationRouter.get("/settings", async (req, res) => {
+automationRouter.get("/rules", async (req, res) => {
     try {
-        const response = await Settings.getAll();
+        const response = await Rules.getAll();
         res.send(response);
     } catch (error) {
         next(new ApiError(500, error));
     }
 });
 
-automationRouter.get("/settings/:id", async (req, res, next) => {
+automationRouter.get("/rules/:id", async (req, res, next) => {
     try {
-        const response = await Settings.getById(req.params.id);
+        const response = await Rules.getById(req.params.id);
         res.send(response);
     } catch (error) {
         next(new ApiError(500, error));

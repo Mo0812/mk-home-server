@@ -2,6 +2,7 @@ const logger = require("../system/Logger/Logger");
 const tradfri = require("../controller/Tradfri/Tradfri");
 const tradfriDataCollector = require("../controller/Tradfri/TradfriDataCollector");
 const mkhtSocket = require("../controller/MKHTemp/MKHTSocket");
+const automator = require("../controller/Automation/Automator");
 const {
     connect: connectWS,
 } = require("../system/WebsocketServer/WebsocketServer");
@@ -10,6 +11,7 @@ tradfri.connect();
 tradfriDataCollector.collectData();
 mkhtSocket.connectAll();
 connectWS();
+automator.start();
 
 /** Tradfri Repair connection */
 var tradfriReconnectInterval = null;

@@ -100,9 +100,29 @@ function storeReturn(userId = null) {
     });
 }
 
+const getCurrentPeopleState = () => {
+    return new Promise((resolve, reject) => {
+        db.query(
+            `SELECT * FROM people_protocol ORDER BY protocolTime DESC LIMIT 1;
+        `,
+            (error, result) => {
+                if (error) {
+                    logger.log(
+                        "error",
+                        "Automation/Protocol: " + error.message
+                    );
+                    reject(error);
+                }
+                resolve(result[0]);
+            }
+        );
+    });
+};
+
 module.exports = {
     storeDeviceState: storeDeviceState,
     exportDeviceState: exportDeviceState,
     storeGo: storeGo,
     storeReturn: storeReturn,
+    getCurrentPeopleState,
 };

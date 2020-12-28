@@ -25,9 +25,16 @@ var tradfriEmitter = new events.EventEmitter();
 const connect = async (withIP = false) => {
     const gateway = await discoverGateway();
     logger.log("info", gateway);
-    const gatewayHost = withIP ? gateway.addresses[0] : gateway.name;
 
-    const tradfri = new TradfriClient(gatewayHost);
+    var tradfri = null;
+    if (gateway) {
+        const gatewayHost = withIP ? gateway.addresses[0] : gateway.name;
+        tradfri = new TradfriClient(gatewayHost);
+    } else {
+        logger.log("error", "Tradfri/Tradfro: " + authError.message);
+        tradfriEmitter.emit("tradfri-gateway-connection-error");
+        return;
+    }
 
     try {
         await tradfri.connect(tradfri_user, tradfri_psk);
