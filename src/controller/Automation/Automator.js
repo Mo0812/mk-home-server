@@ -5,7 +5,7 @@ const services = require("../Devices/Devices");
 const serviceType = require("../Devices/DeviceType");
 
 const enabled = parseInt(process.env.AUTOMATION_ENABLED) == 1;
-const requestIntervalDelay = 1000; //process.env.AUTOMATION_REQUEST_INTERVAL || 30000;
+const requestIntervalDelay = process.env.AUTOMATION_REQUEST_INTERVAL || 30000;
 var requestInterval = null;
 
 const getAutomationState = async (ruleState) => {
