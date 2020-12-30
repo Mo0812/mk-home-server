@@ -52,7 +52,13 @@ const getAllRuleStates = async () => {
     }
 };
 
+const getActiveRuleStates = async () => {
+    const ruleStates = await getAllRuleStates();
+    return ruleStates.filter((item) => item.active);
+};
+
 module.exports = {
     getRuleState,
     getAllRuleStates,
+    getActiveRuleStates,
 };
