@@ -85,11 +85,11 @@ const start = () => {
                     device = device.lightList
                         ? device.lightList[0]
                         : device.plugList[0];
-                    /*if (decision.onoff) {
+                    if (decision.onoff) {
                         device.turnOn();
                     } else {
                         device.turnOff();
-                    }*/
+                    }
                 } catch (error) {
                     logger.log(
                         "error",
