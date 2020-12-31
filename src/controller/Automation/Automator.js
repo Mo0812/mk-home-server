@@ -80,17 +80,16 @@ const start = () => {
             for (const rState of ruleStates) {
                 try {
                     const decision = await getAutomationState(rState);
+                    logger.log("info", decision);
                     var device = _getTradfriDeviceForRuleState(rState);
                     device = device.lightList
                         ? device.lightList[0]
                         : device.plugList[0];
-                    console.log(decision);
-                    console.log(device);
-                    if (decision.onoff) {
+                    /*if (decision.onoff) {
                         device.turnOn();
                     } else {
                         device.turnOff();
-                    }
+                    }*/
                 } catch (error) {
                     logger.log(
                         "error",
