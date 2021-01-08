@@ -4,7 +4,7 @@ const ApiError = require("../../helpers/Errors/ApiError");
 
 const loggingRouter = express.Router();
 
-loggingRouter.get("/app", async (req, res) => {
+loggingRouter.get("/app", async (req, res, next) => {
     try {
         const appLog = await Logging.loadAppLog();
         res.send(appLog);

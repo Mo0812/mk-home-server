@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.5.8-MariaDB-1:10.5.8+maria~focal)
 # Database: dev
-# Generation Time: 2020-12-27 15:39:25 +0000
+# Generation Time: 2021-01-08 17:00:29 +0000
 # ************************************************************
 
 
@@ -21,26 +21,27 @@ SET NAMES utf8mb4;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Dump of table automation_settings
+# Dump of table automation_rules
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `automation_settings`;
+DROP TABLE IF EXISTS `automation_rules`;
 
-CREATE TABLE `automation_settings` (
+CREATE TABLE `automation_rules` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `instanceID` int(11) NOT NULL,
-  `mode` enum('away','always','scheduled') NOT NULL DEFAULT 'away',
+  `mode` enum('present','away','always','scheduled') NOT NULL DEFAULT 'away',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-LOCK TABLES `automation_settings` WRITE;
-/*!40000 ALTER TABLE `automation_settings` DISABLE KEYS */;
+LOCK TABLES `automation_rules` WRITE;
+/*!40000 ALTER TABLE `automation_rules` DISABLE KEYS */;
 
-INSERT INTO `automation_settings` (`id`, `instanceID`, `mode`)
+INSERT INTO `automation_rules` (`id`, `instanceID`, `mode`)
 VALUES
-	(1,65540,'away');
+	(1,65540,'away'),
+	(2,65537,'present');
 
-/*!40000 ALTER TABLE `automation_settings` ENABLE KEYS */;
+/*!40000 ALTER TABLE `automation_rules` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -51,9 +52,10 @@ DROP TABLE IF EXISTS `connected_smarthome_devices`;
 
 CREATE TABLE `connected_smarthome_devices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `type` enum('mkht','tradfri') NOT NULL,
+  `type` enum('mkht','tradfri','mkha') NOT NULL,
   `ip_addr` text DEFAULT NULL,
   `port` int(11) DEFAULT NULL,
+  `ws_port` int(11) DEFAULT NULL,
   `nicename` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -61,9 +63,10 @@ CREATE TABLE `connected_smarthome_devices` (
 LOCK TABLES `connected_smarthome_devices` WRITE;
 /*!40000 ALTER TABLE `connected_smarthome_devices` DISABLE KEYS */;
 
-INSERT INTO `connected_smarthome_devices` (`id`, `type`, `ip_addr`, `port`, `nicename`)
+INSERT INTO `connected_smarthome_devices` (`id`, `type`, `ip_addr`, `port`, `ws_port`, `nicename`)
 VALUES
-	(1,'mkht','192.168.178.22',8000,'Therometer Arbeitszimmer');
+	(1,'mkht','127.0.0.1',8001,4001,'Therometer Arbeitszimmer'),
+	(2,'mkha','127.0.0.1',9090,NULL,'Automation');
 
 /*!40000 ALTER TABLE `connected_smarthome_devices` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -508,6 +511,38 @@ CREATE TABLE `people_protocol` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+LOCK TABLES `people_protocol` WRITE;
+/*!40000 ALTER TABLE `people_protocol` DISABLE KEYS */;
+
+INSERT INTO `people_protocol` (`id`, `userId`, `protocolTime`, `type`)
+VALUES
+	(1,NULL,'2020-12-10 18:00:12','go'),
+	(2,NULL,'2020-12-10 18:33:08','return'),
+	(3,NULL,'2020-12-12 14:03:51','go'),
+	(4,NULL,'2020-12-12 14:31:28','return'),
+	(5,NULL,'2020-12-12 21:29:33','go'),
+	(6,NULL,'2020-12-12 21:34:18','return'),
+	(7,NULL,'2020-12-12 21:40:31','go'),
+	(8,NULL,'2020-12-12 21:43:23','return'),
+	(9,NULL,'2020-12-13 18:29:02','go'),
+	(10,NULL,'2020-12-13 18:35:59','return'),
+	(11,NULL,'2020-12-14 17:34:49','go'),
+	(12,NULL,'2020-12-14 18:03:26','return'),
+	(13,NULL,'2020-12-15 17:49:48','go'),
+	(14,NULL,'2020-12-15 18:59:53','return'),
+	(15,NULL,'2020-12-18 17:40:20','go'),
+	(16,NULL,'2020-12-18 17:49:00','return'),
+	(17,NULL,'2020-12-18 17:53:55','go'),
+	(18,NULL,'2020-12-18 18:16:55','return'),
+	(19,NULL,'2020-12-23 17:18:06','go'),
+	(20,NULL,'2020-12-23 17:23:11','return'),
+	(21,NULL,'2020-12-28 11:44:40','go'),
+	(22,NULL,'2020-12-28 11:59:47','return'),
+	(23,NULL,'2020-12-28 18:33:41','go'),
+	(24,NULL,'2020-12-28 19:48:04','return');
+
+/*!40000 ALTER TABLE `people_protocol` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
